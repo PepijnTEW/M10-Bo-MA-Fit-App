@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MA-Fit-App",
-    "slug": "MA-Fit-App",
+    "name": "MA-Fit-Frontend",
+    "slug": "MA-Fit-Frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mafitapp",
+    "scheme": "mafitfrontend",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

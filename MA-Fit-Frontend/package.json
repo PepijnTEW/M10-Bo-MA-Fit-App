@@ -1,5 +1,5 @@
 {
-  "name": "ma-fit-app",
+  "name": "ma-fit-frontend",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
