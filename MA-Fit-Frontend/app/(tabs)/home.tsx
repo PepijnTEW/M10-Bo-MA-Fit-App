@@ -1,8 +1,57 @@
 import { Text, View, Button, StyleSheet, ScrollView } from "react-native";
+import { COLORS } from "../../styles/colors";
 
-export default function Home() {
-  let value = 7;
+function Pijler({
+  value,
+  title,
+  color,
+}: {
+  value: number;
+  title: string;
+  color: string;
+}) {
   const fill = value / 10;
+  return (
+    <View style={[STYLE.pijlerContainer]}>
+      <View style={[STYLE.pijler]}>
+        <View
+          style={[
+            STYLE.innerFill,
+            { height: `${fill * 100}%`, backgroundColor: color },
+          ]}
+        />
+      </View>
+      <Text>{title}</Text>
+    </View>
+  );
+}
+function Challenge({
+  value,
+  goal,
+  title,
+  color,
+}: {
+  value: number;
+  goal: number;
+  title: string;
+  color: string;
+}) {
+  const fill = value / goal;
+  return (
+    <View style={[STYLE.box, STYLE.challangeContainer]}>
+      <Text style={[STYLE.challangeTitle]}>{title}</Text>
+      <View style={[STYLE.challangeProgress]}>
+        <View
+          style={[
+            STYLE.innerFill,
+            { width: `${fill * 100}%`, height: "100%", backgroundColor: color },
+          ]}
+        />
+      </View>
+    </View>
+  );
+}
+export default function Home() {
   return (
     <View style={STYLE.screen}>
       <View style={STYLE.header}>
@@ -22,67 +71,34 @@ export default function Home() {
         <View style={[STYLE.pijlerSection, STYLE.box]}>
           <Text style={STYLE.boxTitle}>8 Brein pijlers</Text>
           <View style={[STYLE.pijlerRow]}>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}>
-                <View style={[STYLE.innerFill, { height: `${fill * 100}%` }]} />
-              </View>
-              <Text>Voeding</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Beweging</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Slaap</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Mindset</Text>
-            </View>
+            <Pijler value={1} title="test" color="red" />
+            <Pijler value={5} title="test" color="yellow" />
+            <Pijler value={3} title="test" color="blue" />
+            <Pijler value={9} title="test" color="green" />
           </View>
-          <View style={[STYLE.pijlerRow, {}]}>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Stress</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Sociaal</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Omgeving</Text>
-            </View>
-            <View style={[STYLE.pijlerContainer]}>
-              <View style={[STYLE.pijler]}></View>
-              <Text>Zelfregie</Text>
-            </View>
+          <View style={[STYLE.pijlerRow]}>
+            <Pijler value={6} title="test" color="pink" />
+            <Pijler value={7} title="test" color="purple" />
+            <Pijler value={2} title="test" color="orange" />
+            <Pijler value={4} title="test" color="magenta" />
           </View>
         </View>
         <View style={[STYLE.challangeSection, STYLE.box]}>
           <Text style={STYLE.boxTitle}>Challenges</Text>
           <ScrollView>
-            <View style={[STYLE.box, STYLE.challangeContainer]}>
-              <Text style={[STYLE.challangeTitle]}>Challenge Title</Text>
-              <View style={[STYLE.challangeProgress]}></View>
-            </View>
-            <View style={[STYLE.box, STYLE.challangeContainer]}>
-              <Text style={[STYLE.challangeTitle]}>Challenge Title</Text>
-              <View style={[STYLE.challangeProgress]}></View>
-            </View>
-            <View style={[STYLE.box, STYLE.challangeContainer]}>
-              <Text style={[STYLE.challangeTitle]}>Challenge Title</Text>
-              <View style={[STYLE.challangeProgress]}></View>
-            </View>
-            <View style={[STYLE.box, STYLE.challangeContainer]}>
-              <Text style={[STYLE.challangeTitle]}>Challenge Title</Text>
-              <View style={[STYLE.challangeProgress]}></View>
-            </View>
-            <View style={[STYLE.box, STYLE.challangeContainer]}>
-              <Text style={[STYLE.challangeTitle]}>Challenge Title</Text>
-              <View style={[STYLE.challangeProgress]}></View>
-            </View>
+            <Challenge value={1} goal={3} title="3 dagen focus" color="red" />
+            <Challenge
+              value={4}
+              goal={5}
+              title="5 dagen slaap routine"
+              color="red"
+            />
+            <Challenge
+              value={2}
+              goal={7}
+              title="7 dagen stress less"
+              color="red"
+            />
           </ScrollView>
         </View>
       </View>
@@ -92,76 +108,108 @@ export default function Home() {
 const STYLE = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: COLORS.background,
+    padding: 12,
   },
+
   header: {
-    padding: 10,
+    paddingHorizontal: 4,
+    paddingTop: 4,
+    paddingBottom: 12,
   },
+
   title: {
     fontSize: 24,
-    fontWeight: "600",
-    marginBottom: 8,
+    fontWeight: "700",
+    marginBottom: 4,
+    color: COLORS.text,
   },
+
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
+
   content: {
     flex: 1,
     flexDirection: "column",
   },
+
   box: {
-    margin: 5,
-    padding: 5,
-    borderRadius: 8,
-    shadowRadius: 3,
-    shadowOpacity: 0.3,
+    marginHorizontal: 4,
+    marginVertical: 6,
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: COLORS.cardBackground,
+    shadowColor: "#000",
+    shadowRadius: 8,
+    shadowOpacity: 0.06,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
+
   boxTitle: {
     fontSize: 18,
-    fontWeight: "500",
-    color: "black",
+    fontWeight: "600",
+    color: COLORS.text,
     textAlign: "center",
-    marginBottom: 2.5,
+    marginBottom: 8,
   },
+
   pijlerSection: {
     flex: 0.6,
   },
+
   pijlerRow: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
+
   pijlerContainer: {
     flex: 1,
     alignItems: "center",
   },
+
   pijler: {
     height: "80%",
-    width: 25,
-    borderRadius: 50,
-    backgroundColor: "lightgray",
+    width: 28,
+    borderRadius: 999,
+    backgroundColor: COLORS.pillarTrack,
     borderStyle: "solid",
-    borderColor: "black",
-    borderWidth: 2,
+    borderColor: COLORS.borderLight,
+    borderWidth: 1,
     justifyContent: "flex-end",
     overflow: "hidden",
   },
+
   innerFill: {
     width: "100%",
-    backgroundColor: "blue",
-    borderRadius: 50,
+    borderRadius: 999,
   },
-  challangeSection: { flex: 0.4 },
+
+  challangeSection: {
+    flex: 0.4,
+  },
+
   challangeContainer: {
-    backgroundColor: "lightgray",
-    gap: 2,
+    backgroundColor: COLORS.cardBackground,
+    gap: 6,
   },
-  challangeTitle: {},
+
+  challangeTitle: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: COLORS.textMuted,
+    marginBottom: 4,
+  },
+
   challangeProgress: {
-    borderRadius: 50,
-    backgroundColor: "white",
+    borderRadius: 999,
+    backgroundColor: COLORS.pillarTrack,
     height: 10,
     width: "100%",
+    overflow: "hidden",
   },
 });
