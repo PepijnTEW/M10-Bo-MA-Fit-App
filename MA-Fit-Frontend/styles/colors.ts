@@ -5,6 +5,6 @@ export const COLORS = {
   cardBackground: "#FFFFFF",
   text: "#000000",
   textMuted: "#666666",
-  borderLight: "#D0D0D0",
+  borderLight: "#C3C3C3",
   pillarTrack: "#E6E6E6",
 };
