@@ -29,11 +29,11 @@ class PillarController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-        'name' => 'required|string',
-        'slug' => 'required|unique:pillars,slug',
-        'description' => 'required|string',
-        'color' => 'required|string',
-        'needed_value' => 'required|integer|min:1|max:10',
+            "name" => "required|string",
+            "slug" => "required|unique:pillars,slug",
+            "description" => "required|string",
+            "color" => "required|string",
+            "needed_value" => "required|integer|min:1|max:10",
         ]);
         return Pillar::create($data);
     }
@@ -60,7 +60,7 @@ class PillarController extends Controller
     public function update(Request $request, Pillar $pillar)
     {
         $pillar->update($request->all());
-        return $pillar
+        return $pillar;
     }
 
     /**
@@ -69,6 +69,6 @@ class PillarController extends Controller
     public function destroy(Pillar $pillar)
     {
         $pillar->delete();
-        return response()->json(null,204);
+        return response()->json(null, 204);
     }
 }
