@@ -7,25 +7,11 @@ use Illuminate\Http\Request;
 
 class PillarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return Pillar::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -35,37 +21,28 @@ class PillarController extends Controller
             "color" => "required|string",
             "needed_value" => "required|integer|min:1|max:10",
         ]);
+        
         return Pillar::create($data);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Pillar $pillar)
     {
         return $pillar;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pillar $pillar)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Pillar $pillar)
     {
-        $pillar->update($request->all());
+        $data = $request->validate([
+            'name' => 'sometimes|string',
+            'slug' => 'sometimes|string|unique:pillars,slug' . $pillar->id,
+            'description' => 'sometimes|string'
+            'color' => 'sometimes|string',
+            'needed_value' => 'sometimes|integer|min:1|max:10',
+        ]);
+        $pillar->update($data);
         return $pillar;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pillar $pillar)
     {
         $pillar->delete();
