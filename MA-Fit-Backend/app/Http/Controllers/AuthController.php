@@ -12,16 +12,19 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            "name" => "required|string|max:255",
-            "email" => "required|email|unique:users",
-            "password" => "required|min:6|confirmed",
+            "name" => ["required", "string", "max:255"],
+            "email" => ["required", "email", "unique:users,email"],
+            "password" => ["required", "string", "min:6", "confirmed"],
         ]);
         $user = User::create([
             "name" => $validated["name"],
             "email" => $validated["email"],
-            "password" => Hash::make($validated["password"]),
+            "password" => $validated["password"],
             "role" => "user",
         ]);
+
+        $token = $user->createToken('api-token')->plainTextToken;
+
         return response()->json([
             "message" => "Gebruiker aangemaakt",
             "user" => $user,
@@ -30,20 +33,33 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            "email" => "required|email",
-            "password" => "required"
+            "email" => ["required", "email"],
+            "password" => ["required", "string"],
         ]);
 
         if (!Auth::attempt($validated)) {
-            return response()->json([ 'message' => 'Ongeldige inloggegevens'
-            ], 401);
+            return response()->json([ 
+                'message' => 'Ongeldige inloggegevens'], 401);
         }
 
-        $user = $request->user();
+        $user = Auth::user();
+
+        $user->tokens()->delete();
+
+        $token = $user->createToken(api-token)->plainTextToken;
 
         return respons()->json([
             "message" => "Succesvol ingelogd",
             "user" => $user
+            "token" => $token,
+        ]);
+    }
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            "message" => "Uitgelogd",
         ]);
     }
 }
