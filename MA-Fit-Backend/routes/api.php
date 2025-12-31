@@ -17,6 +17,15 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
+// Routes for User Management
+Route::middleware(['auth:sanctum', 'admin'])->group(function(){
+    Route::get('/users', [UserController::class,'index']);
+    Route::get('/users/{user}', [UserController::class,'show']);
+    Route::post('users', [UserController::class,'store']);
+    Route::put('/users/{user}', [UserController::class,'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+});
+
 // Routes for Pillars
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -30,5 +39,4 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/pillars/{pillar}', [PillarController::class, 'update']);
         Route::delete('/pillars/{pillar}', [PillarController::class, 'destroy']);
     });
-
 });
