@@ -12,7 +12,23 @@ class PillarController extends Controller
         return Pillar::all();
     }
 
-    public function store(Request $request)
+    public function show(Pillar $pillar)
+    {
+        return $pillar;
+    }
+
+    public function cmsIndex()
+    {
+        $pillars = Pillar::orderBy('id', 'desc')->get();
+        return view('cms.pillars.index', compact('pillars'));
+    }
+
+    public function cmsCreate()
+    {
+        return view('cms.pillars.create');
+    }
+
+    public function cmsStore(Request $request)
     {
         $data = $request->validate([
             "name" => "required|string",
@@ -21,31 +37,34 @@ class PillarController extends Controller
             "color" => "required|string",
             "needed_value" => "required|integer|min:1|max:10",
         ]);
-        
-        return Pillar::create($data);
+            
+        Pillar::create($data);
+        return redirect()->route('cms.pillars.index');
     }
 
-    public function show(Pillar $pillar)
+    public function cmsEdit(Pillar $pillar)
     {
-        return $pillar;
+        return view('cms.pillars.edit', compact('pillar'));
     }
 
-    public function update(Request $request, Pillar $pillar)
+    public function cmsUpdate(Request $request, Pillar $pillar)
     {
         $data = $request->validate([
-            'name' => 'sometimes|string',
-            'slug' => 'sometimes|string|unique:pillars,slug' . $pillar->id,
-            'description' => 'sometimes|string'
-            'color' => 'sometimes|string',
-            'needed_value' => 'sometimes|integer|min:1|max:10',
+            "name" => "sometimes|string",
+            "slug" => "sometimes|string|unique:pillars,slug," . $pillar->id,
+            "description" => "sometimes|string",
+            "color" => "sometimes|string",
+            "needed_value" => "sometimes|integer|min:1|max:10",
         ]);
+
         $pillar->update($data);
-        return $pillar;
+        return redirect()->route('cms.pillars.index');
+        
     }
 
-    public function destroy(Pillar $pillar)
+    public function cmsDestroy(Pillar $pillar)
     {
         $pillar->delete();
-        return response()->json(null, 204);
+        return redirect()->route('cms.pillars.index')->with('success', 'Pijler Deleted.');
     }
 }

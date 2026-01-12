@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         return respons()->json([
             "message" => "Succesvol ingelogd",
-            "user" => $user
+            "user" => $user,
             "token" => $token,
         ]);
     }
