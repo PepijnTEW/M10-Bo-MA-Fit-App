@@ -19,7 +19,7 @@ class AuthController extends Controller
         $user = User::create([
             "name" => $validated["name"],
             "email" => $validated["email"],
-            "password" => $validated["password"],
+            "password" => Hash::make($validated["password"]),
             "role" => "user",
         ]);
 
@@ -46,9 +46,9 @@ class AuthController extends Controller
 
         $user->tokens()->delete();
 
-        $token = $user->createToken(api-token)->plainTextToken;
+        $token = $user->createToken('api-token')->plainTextToken;
 
-        return respons()->json([
+        return response()->json([
             "message" => "Succesvol ingelogd",
             "user" => $user,
             "token" => $token,

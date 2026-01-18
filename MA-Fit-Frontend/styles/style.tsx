@@ -107,4 +107,20 @@ export const STYLE = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
   },
+
+  textInput: {
+    marginHorizontal: 4,
+    marginVertical: 6,
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderStyle: "solid",
+    borderColor: COLORS.borderLight,
+    borderWidth: 2,
+    shadowColor: "#000",
+    shadowRadius: 8,
+    shadowOpacity: 0.06,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  }
 });

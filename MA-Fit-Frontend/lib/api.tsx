@@ -1,15 +1,10 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
 
-export const api = axios.create({
-  baseURL: "http://192.168.1.10/api",
-  timeout: 10000,
+const api = axios.create({
+  baseURL: "http://127.0.0.1:8000/api",
+  headers: {
+    Accept: "application/json",
+  },
 });
 
-api.interceptors.request.use(async (config) => {
-  const token = await SecureStore.getItemAsync("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+export default api;

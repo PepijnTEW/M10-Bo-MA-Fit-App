@@ -17,10 +17,6 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
+Route::get('/pillars', [PillarController::class, 'index']);
+Route::get('/pillars/{pillar}', [PillarController::class, 'show']);
 // Routes for Pillars
-Route::middleware('auth:sanctum')->group(function () {
-
-    // Read only
-    Route::get('/pillars', [PillarController::class, 'index']);
-    Route::get('/pillars/{pillar}', [PillarController::class, 'show']);
-});
