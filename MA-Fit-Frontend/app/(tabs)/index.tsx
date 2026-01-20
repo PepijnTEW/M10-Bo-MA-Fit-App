@@ -1,17 +1,11 @@
-import { Text, View, Button, ScrollView, FlatList} from "react-native";
+import { Text, View, Button, ScrollView} from "react-native";
 import React, { useState, useEffect} from "react";
 import { STYLE } from "@/styles/style";
 import Pijler from "@/components/pijler";
 import Challenge from "@/components/challenge";
 import api from "@/lib/api";
 
-
-
-export default function Home() {
-  const [pillars, setPillars] = useState<Pillar[]>([]);
-  const [activePijler, setActivePijler] = useState<Pillar | null>(null);
-
-  type Pillar = {
+type Pillar = {
   id: number;
   name: string;
   slug: string;
@@ -20,18 +14,43 @@ export default function Home() {
   needed_value: number;
 };
 
+type Notification = {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export default function Home() {
+  const [pillars, setPillars] = useState<Pillar[]>([]);
+  const [notifications, setNotifications] = useState<Notification>();
+  const [activePijler, setActivePijler] = useState<Pillar | null>(null);
+
+  let pijlerValues = [1,2,3,4,5,6,7,8];
+
+  async function fetchData() {
+    const [pillarRes , notificationsRes] = await Promise.all([
+      api.get("/pillars"),
+      api.get("/notifications"),
+    ]);
+    setPillars(pillarRes.data);
+    
+    if (notificationsRes.data.length > 0) {
+      const i = Math.floor(Math.random() * notificationsRes.data.length);
+      setNotifications(notificationsRes.data[i])
+    }
+  }
+
   useEffect(() => {
-  api.get("/pillars").then((res) => {
-    setPillars(res.data);
-  });
-}, []);
+    fetchData();
+  }, []);
+
 
   return (
     <View style={STYLE.screen}>
       <View style={STYLE.header}>
         <Text style={STYLE.title}>MA Fit App</Text>
         <View style={STYLE.headerRow}>
-          <Text>Notification</Text>
+          <Text>{notifications?.content}</Text>
           <Button
             title="Check in"
             color={"#FF00E6"}
@@ -45,10 +64,10 @@ export default function Home() {
         <View style={[STYLE.pijlerSection, STYLE.box]}>
           <Text style={STYLE.boxTitle}>8 Brein pijlers</Text>
           <View style={[STYLE.pijlerRow]}>
-            {pillars.slice(0,4).map((p) => (
+            {pillars.slice(0,4).map((p, i) => (
               <Pijler
                 key={p.id}
-                value={0}
+                value={pijlerValues[i]}
                 amount={p.needed_value}
                 title={p.name}
                 color={p.color}
@@ -57,10 +76,10 @@ export default function Home() {
             ))}
           </View>
           <View style={[STYLE.pijlerRow]}>
-              {pillars.slice(4,8).map((p) => (
+              {pillars.slice(4,8).map((p, i) => (
                 <Pijler
                   key={p.id}
-                  value={0}
+                  value={pijlerValues[i+4]}
                   amount={p.needed_value}
                   title={p.name}
                   color={p.color}

@@ -89,18 +89,6 @@
     <div class="col-12 d-flex gap-2">
         <button class="btn btn-primary">Opslaan</button>
         <a href="{{ route('cms.pillars.index') }}" class="btn btn-outline-secondary">Annuleren</a>
-
-        <div class="ms-auto">
-            <form action="{{ route('cms.pillars.destroy', $pillar) }}"
-                  method="POST"
-                  onsubmit="return confirm('Weet je zeker dat je deze pijler wilt verwijderen?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger">
-                    Verwijderen
-                </button>
-            </form>
-        </div>
     </div>
 </form>
 

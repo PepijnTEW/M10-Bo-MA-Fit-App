@@ -12,15 +12,15 @@ class PillarController extends Controller
         return Pillar::all();
     }
 
-    public function show(Pillar $pillar)
-    {
-        return $pillar;
-    }
-
     public function cmsIndex()
     {
         $pillars = Pillar::orderBy('id', 'desc')->get();
         return view('cms.pillars.index', compact('pillars'));
+    }
+    
+    public function show(Pillar $pillar)
+    {
+        return $pillar;
     }
 
     public function cmsCreate()

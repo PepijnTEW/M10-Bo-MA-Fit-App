@@ -10,17 +10,17 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string|null>(null)
-
+  const [error, setError] = useState<string|null>(null);
+  
   async function handleLogin() {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.post("/auth/login", {email, password});
-      const token = res.data.token;
+      const RES = await api.post("/auth/login", {email, password});
+      const TOKEN = RES.data.token;
 
-      await AsyncStorage.setItem('token', token);
-      api.defaults.headers.common.Authorization = 'Bearer ${token}';
+      await AsyncStorage.setItem('token', TOKEN);
+      api.defaults.headers.common.Authorization = 'Bearer ${TOKEN}';
 
       router.replace("/");
     }catch (e:any){
@@ -51,8 +51,9 @@ export default function LoginForm() {
             secureTextEntry
       />
     </View>
-    
-      <Button title="Inloggen" onPress={handleLogin} />
+      <Text>Geen account?</Text>
+      <Button title="Register" onPress={()=>{router.replace("/register")}}/>
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }

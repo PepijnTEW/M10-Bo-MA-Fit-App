@@ -20,11 +20,11 @@ export default function RegisterForm() {
 
         if (password == confirmPassword){
             try {
-                const res = await api.post("/auth/register", {name, email, password, password_confirmation: confirmPassword});
-                const token = res.data.token;
+                const RES = await api.post("/auth/register", {name, email, password, password_confirmation: confirmPassword});
+                const TOKEN = RES.data.token;
 
-                await AsyncStorage.setItem('token', token);
-                api.defaults.headers.common.Authorization = 'Bearer ${token}';
+                await AsyncStorage.setItem('token', TOKEN);
+                api.defaults.headers.common.Authorization = 'Bearer ${TOKEN}';
                 
                 router.replace("/");
             }catch (e:any){
@@ -70,8 +70,9 @@ export default function RegisterForm() {
                 onChangeText={setConfirmPassword}
                 secureTextEntry/>
         </View>
-  
-        <Button title="Register" onPress={handleLogin} />
+        <Text>Heb je al een account?</Text>
+              <Button title="Login" onPress={()=>{router.replace("/login")}}/>
+            <Button title="Register" onPress={handleLogin} />
         </View>
     );
 }

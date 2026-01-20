@@ -60,6 +60,10 @@
                    href="{{ route('cms.users.index') }}">
                     Users
                 </a>
+                <a class="p-2 {{ request()->routeIs('cms.notifications.*') ? 'nav-pill-active' : '' }}"
+                   href="{{ route('cms.notifications.index') }}">
+                    Notifications
+                </a>
 
                 {{-- later uitbreiden --}}
                 {{-- <a class="p-2 {{ request()->routeIs('cms.tips.*') ? 'nav-pill-active' : '' }}" href="#">Tips</a> --}}

@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PillarController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotificationController;
+require __DIR__.'/auth.php';
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +65,23 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/users/{user}', [UserController::class, 'cmsDestroy'])
             ->name('users.destroy');
-    });
+        
+        //Notifications
+        Route::get('/notifications', [NotificationController::class, 'cmsIndex'])
+            ->name('notifications.index');
 
-require __DIR__.'/auth.php';
+        Route::get('/notifications/create', [NotificationController::class, 'cmsCreate'])
+            ->name('notifications.create');
+
+        Route::post('/notifications', [NotificationController::class, 'cmsStore'])
+            ->name('notifications.store');
+
+        Route::get('/notifications/{notification}/edit', [NotificationController::class, 'cmsEdit'])
+            ->name('notifications.edit');
+
+        Route::put('/notifications/{notification}', [NotificationController::class, 'cmsUpdate'])
+            ->name('notifications.update');
+
+        Route::delete('/notifications/{notification}', [NotificationController::class, 'cmsDestroy'])
+            ->name('notifications.destroy');
+    });
