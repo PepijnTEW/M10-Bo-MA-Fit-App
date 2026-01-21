@@ -1,16 +1,31 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { COLORS } from "./colors";
-export const STYLE = StyleSheet.create({
+
+export function useAppStyles()
+{
+  const {width, height} = useWindowDimensions();
+  
+  const isLandscape = width > height;
+  const isSmall = width < 360;
+  const isTablet = width >= 768;
+
+return StyleSheet.create ({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,
-    padding: 12,
+    padding: isTablet ? 20 : 12,
+  },
+
+  container: {
+    width: "100%",
+    ...(isTablet ? { maxWidth: 800, alignSelf: "center" } : null),
+    height: "100%",
   },
 
   header: {
     paddingHorizontal: 4,
     paddingTop: 4,
-    paddingBottom: 12,
+    paddingBottom: 12,padding: isTablet ? 20 : 12,
   },
 
   title: {
@@ -29,6 +44,20 @@ export const STYLE = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "column",
+  },
+
+  row:{
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: isTablet ? 28 : 16, 
+  },
+
+  buttonRow:{
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    gap: isTablet ? 28 : 16, 
   },
 
   box: {
@@ -59,7 +88,8 @@ export const STYLE = StyleSheet.create({
   pijlerRow: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    gap: isTablet ? 28 : 16, 
   },
 
   pijlerContainer: {
@@ -69,7 +99,7 @@ export const STYLE = StyleSheet.create({
 
   pijler: {
     height: "80%",
-    width: 28,
+    width: 25,
     borderRadius: 999,
     backgroundColor: COLORS.pillarTrack,
     borderStyle: "solid",
@@ -96,7 +126,7 @@ export const STYLE = StyleSheet.create({
   challangeTitle: {
     fontSize: 14,
     fontWeight: "500",
-    color: COLORS.textMuted,
+    color: COLORS.text,
     marginBottom: 4,
   },
 
@@ -122,5 +152,43 @@ export const STYLE = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
-  }
-});
+  },
+
+  button: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
+  },
+
+  secondaryButton: {
+    backgroundColor: COLORS.background,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1.5,
+    borderColor: COLORS.borderLight,
+  },
+
+  buttonText: {
+    fontWeight: "700",
+    fontSize: 15,
+    color: "#FFFFFF",
+  },
+
+  secondaryButtonText: {
+    fontWeight: "600",
+    fontSize: 15,
+    color: COLORS.primary,
+  },
+}
+)}

@@ -3,7 +3,9 @@ import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import api from "@/lib/api";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
+import Head from "expo-router/head";
+
 export default function Layout() {
 
   useEffect(()=>{
@@ -23,6 +25,13 @@ export default function Layout() {
 
   return (
     <>
+      <Head>
+        <title>MA Fit – Mental Awareness App</title>
+        <meta
+          name="description"
+          content="MA Fit helpt gebruikers hun mentale welzijn te verbeteren via check-ins, 8 breinpijlers en challenges."
+        />
+      </Head>
       <StatusBar style="light" />
       <Tabs screenOptions={{ headerShown: false }}></Tabs>
     </>

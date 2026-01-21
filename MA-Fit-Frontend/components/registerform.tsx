@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import api from "@/lib/api";
 import { router } from "expo-router";
-import { STYLE } from "@/styles/style";
+import api from "@/lib/api";
+import { useAppStyles } from "@/styles/style";
 
 export default function RegisterForm() {
     const [name, setName] = useState("");
@@ -13,6 +13,8 @@ export default function RegisterForm() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
+
+    const STYLE = useAppStyles();
 
     async function handleLogin() {
         setLoading(true);
@@ -70,9 +72,19 @@ export default function RegisterForm() {
                 onChangeText={setConfirmPassword}
                 secureTextEntry/>
         </View>
-        <Text>Heb je al een account?</Text>
-              <Button title="Login" onPress={()=>{router.replace("/login")}}/>
-            <Button title="Register" onPress={handleLogin} />
-        </View>
+        <View style={STYLE.buttonRow}>
+            <View>
+                <Text>Heb je al een account?</Text>
+                <Pressable onPress={()=>{router.replace("/login")}} style={STYLE.secondaryButton}>
+                    <Text style={STYLE.secondaryButtonText}>Login</Text>
+                </Pressable>
+            </View>
+            <View>
+                <Pressable onPress={handleLogin} style={STYLE.button}>
+                    <Text style={STYLE.buttonText}>Register</Text>
+                </Pressable>
+            </View>
+        </View>            
+    </View>
     );
 }

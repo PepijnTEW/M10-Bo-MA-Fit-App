@@ -1,9 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text, Pressable } from "react-native";
 import { router } from "expo-router";
 import api from "@/lib/api";
-import { Button } from "react-native";
+import { useAppStyles } from "@/styles/style";
 
-export function LogoutButton(){
+export default function LogoutButton(){
+    const STYLE = useAppStyles();
+
     async function logout() {
         try {
             await api.post("/auth/logout");
@@ -17,10 +20,8 @@ export function LogoutButton(){
     }
 
     return (
-        <Button
-            title="Logout"
-            color={"#FF00E6"}
-            onPress={logout}
-        />
+        <Pressable onPress={logout} style={STYLE.button}>
+            <Text style={STYLE.buttonText}>Logout</Text>
+        </Pressable>
     )
 }

@@ -1,9 +1,10 @@
-import { Text, View, Button, ScrollView} from "react-native";
+import { Text, View, ScrollView, Pressable} from "react-native";
 import React, { useState, useEffect} from "react";
-import { STYLE } from "@/styles/style";
+import { BlurView } from "expo-blur";
+import api from "@/lib/api";
+import { useAppStyles } from "@/styles/style";
 import Pijler from "@/components/pijler";
 import Challenge from "@/components/challenge";
-import api from "@/lib/api";
 
 type Pillar = {
   id: number;
@@ -24,6 +25,8 @@ export default function Home() {
   const [pillars, setPillars] = useState<Pillar[]>([]);
   const [notifications, setNotifications] = useState<Notification>();
   const [activePijler, setActivePijler] = useState<Pillar | null>(null);
+
+  const STYLE = useAppStyles();
 
   let pijlerValues = [1,2,3,4,5,6,7,8];
 
@@ -47,17 +50,14 @@ export default function Home() {
 
   return (
     <View style={STYLE.screen}>
-      <View style={STYLE.header}>
+      <View style={STYLE.container}>
+        <View style={STYLE.header}>
         <Text style={STYLE.title}>MA Fit App</Text>
         <View style={STYLE.headerRow}>
           <Text>{notifications?.content}</Text>
-          <Button
-            title="Check in"
-            color={"#FF00E6"}
-            onPress={() => {
-              console.log("Pressed");
-            }}
-          />
+          <Pressable onPress={() => { console.log("Pressed");}} style={STYLE.button}>
+            <Text style={STYLE.buttonText}>Check in</Text>
+          </Pressable>
         </View>
       </View>
       <View style={STYLE.content}>
@@ -109,7 +109,7 @@ export default function Home() {
       </View>
 
       {activePijler && (
-        <View
+        <BlurView
           style={{
             position: "absolute",
             top: 0,
@@ -130,14 +130,17 @@ export default function Home() {
               width: "80%",
             }}
           >
-            <Button title="X" onPress={() => setActivePijler(null)} />
             <Text style={{ fontWeight: "600", marginTop: 8 }}>
               Informatie over: {activePijler.name}
             </Text>
             <Text style={{ fontSize: 12, marginTop: 4 }}>{activePijler.description}</Text>
+            <Pressable onPress={() => setActivePijler(null)} style={STYLE.button}>
+              <Text style={STYLE.buttonText}>X</Text>
+            </Pressable>
           </View>
-        </View>
+        </BlurView>
       )}
+      </View>
     </View>
   );
 }
