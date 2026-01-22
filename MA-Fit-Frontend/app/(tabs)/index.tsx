@@ -21,9 +21,16 @@ type Notification = {
   content: string;
 }
 
+type Challange = {
+  id: number;
+  name: string;
+  needed_value: number;
+}
+
 export default function Home() {
   const [pillars, setPillars] = useState<Pillar[]>([]);
   const [notifications, setNotifications] = useState<Notification>();
+  const [challenges, setChallenges] = useState<Challange[]>([]);
   const [activePijler, setActivePijler] = useState<Pillar | null>(null);
 
   const STYLE = useAppStyles();
@@ -31,22 +38,22 @@ export default function Home() {
   let pijlerValues = [1,2,3,4,5,6,7,8];
 
   async function fetchData() {
-    const [pillarRes , notificationsRes] = await Promise.all([
+    const [pillarRes , notificationsRes, challengesRes] = await Promise.all([
       api.get("/pillars"),
       api.get("/notifications"),
+      api.get("/challenges")
     ]);
     setPillars(pillarRes.data);
-    
+    setChallenges(challengesRes.data);
     if (notificationsRes.data.length > 0) {
       const i = Math.floor(Math.random() * notificationsRes.data.length);
       setNotifications(notificationsRes.data[i])
     }
   }
-
+  
   useEffect(() => {
     fetchData();
   }, []);
-
 
   return (
     <View style={STYLE.screen}>
@@ -55,9 +62,9 @@ export default function Home() {
         <Text style={STYLE.title}>MA Fit App</Text>
         <View style={STYLE.headerRow}>
           <Text>{notifications?.content}</Text>
-          <Pressable onPress={() => { console.log("Pressed");}} style={STYLE.button}>
+          {/* <Pressable onPress={() => { console.log("Pressed");}} style={STYLE.button}>
             <Text style={STYLE.buttonText}>Check in</Text>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
       <View style={STYLE.content}>
@@ -91,19 +98,14 @@ export default function Home() {
         <View style={[STYLE.challangeSection, STYLE.box]}>
           <Text style={STYLE.boxTitle}>Challenges</Text>
           <ScrollView>
-            <Challenge value={1} goal={3} title="3 dagen focus" color="red" />
+            {challenges.map((c) => (
             <Challenge
+              key={c.id}
+              title={c.name}
+              goal={c.needed_value}
               value={4}
-              goal={5}
-              title="5 dagen slaap routine"
-              color="red"
             />
-            <Challenge
-              value={2}
-              goal={7}
-              title="7 dagen stress less"
-              color="red"
-            />
+          ))}
           </ScrollView>
         </View>
       </View>

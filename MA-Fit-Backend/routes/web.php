@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PillarController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChallengeController;
 require __DIR__.'/auth.php';
 
 
@@ -84,4 +85,23 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/notifications/{notification}', [NotificationController::class, 'cmsDestroy'])
             ->name('notifications.destroy');
+
+        //Challenges
+        Route::get('/challenges', [ChallengeController::class, 'cmsIndex'])
+            ->name('challenges.index');
+
+        Route::get('/challenges/create', [ChallengeController::class, 'cmsCreate'])
+            ->name('challenges.create');
+
+        Route::post('/challenges', [ChallengeController::class, 'cmsStore'])
+            ->name('challenges.store');
+
+        Route::get('/challenges/{challenge}/edit', [ChallengeController::class, 'cmsEdit'])
+            ->name('challenges.edit');
+
+        Route::put('/challenges/{challenge}', [ChallengeController::class, 'cmsUpdate'])
+            ->name('challenges.update');
+
+        Route::delete('/challenges/{challenge}', [ChallengeController::class, 'cmsDestroy'])
+            ->name('challenges.destroy');
     });

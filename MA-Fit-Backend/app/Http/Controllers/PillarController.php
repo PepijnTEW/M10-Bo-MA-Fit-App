@@ -65,6 +65,6 @@ class PillarController extends Controller
     public function cmsDestroy(Pillar $pillar)
     {
         $pillar->delete();
-        return redirect()->route('cms.pillars.index')->with('success', 'Pijler Deleted.');
+        return redirect()->route('cms.pillars.index');
     }
 }

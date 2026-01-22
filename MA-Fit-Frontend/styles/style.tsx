@@ -3,10 +3,7 @@ import { COLORS } from "./colors";
 
 export function useAppStyles()
 {
-  const {width, height} = useWindowDimensions();
-  
-  const isLandscape = width > height;
-  const isSmall = width < 360;
+  const {width} = useWindowDimensions();
   const isTablet = width >= 768;
 
 return StyleSheet.create ({
@@ -25,7 +22,8 @@ return StyleSheet.create ({
   header: {
     paddingHorizontal: 4,
     paddingTop: 4,
-    paddingBottom: 12,padding: isTablet ? 20 : 12,
+    paddingBottom: 12,
+    padding: isTablet ? 20 : 12,
   },
 
   title: {

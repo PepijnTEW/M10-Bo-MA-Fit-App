@@ -1,9 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import api from "@/lib/api";
-import { router, Stack } from "expo-router";
 import Head from "expo-router/head";
 
 export default function Layout() {
@@ -14,11 +13,10 @@ export default function Layout() {
       
       if (!token) {
         router.replace("/login");
+        return
       }
-      if (token) {
-        api.defaults.headers.common.Authorization = 'Bearer ${token}';
-        router.replace("/");
-      }
+      api.defaults.headers.common.Authorization = 'Bearer ${token}';
+      router.replace("/");
     }
     checkToken();
   })

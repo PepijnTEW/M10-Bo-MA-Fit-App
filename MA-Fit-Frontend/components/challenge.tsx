@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { useAppStyles } from "@/styles/style";
 
-export default function Challenge({ value, goal, title, color, } : { value: number; goal: number; title: string; color: string;})
+export default function Challenge({ value, goal, title} : { value: number; goal: number; title: string;})
 {
   const STYLE = useAppStyles()
   const fill = value / goal;
@@ -13,7 +13,7 @@ export default function Challenge({ value, goal, title, color, } : { value: numb
         <View
           style={[
             STYLE.innerFill,
-            { width: `${fill * 100}%`, height: "100%", backgroundColor: color },
+            { width: `${fill * 100}%`, height: "100%", backgroundColor: "red" },
           ]}
         />
       </View>
